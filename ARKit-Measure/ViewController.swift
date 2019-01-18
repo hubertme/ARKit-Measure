@@ -14,6 +14,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     var spheres: [SCNNode] = []
     @IBOutlet var sceneView: ARSCNView!
+    @IBOutlet weak var distanceLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +52,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         spheres.append(sphere)
         
         if let first = spheres.first {
-            print(sphere.distance(to: first))
+            let distanceToFirst = sphere.distance(to: first)
+            print(distanceToFirst)
+            distanceLabel.text = "\(distanceToFirst) cm"
+            
             if spheres.count > 2 {
                 for sphere in spheres {
                     sphere.removeFromParentNode()
