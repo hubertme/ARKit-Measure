@@ -11,7 +11,7 @@ import SceneKit
 import ARKit
 
 class ViewController: UIViewController, ARSCNViewDelegate {
-
+    
     @IBOutlet var sceneView: ARSCNView!
     
     override func viewDidLoad() {
@@ -44,7 +44,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let hitTest = sceneView.hitTest(location, types: [.featurePoint])
         guard let result = hitTest.last else {return}
         
-        print(result)
+        let transform = SCNMatrix4.init(result.worldTransform)
+        let vector = SCNVector3Make(transform.m41, transform.m42, transform.m43)
+        let sphere = createSphere(at: vector)
+        sceneView.scene.rootNode.addChildNode(sphere)
     }
     
     private func createSphere(at position: SCNVector3) -> SCNNode{
