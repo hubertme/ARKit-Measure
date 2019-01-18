@@ -24,10 +24,23 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.showsStatistics = true
         
         // Create a new scene
-        let scene = SCNScene(named: "art.scnassets/ship.scn")!
+        let scene = SCNScene()
         
         // Set the scene to the view
         sceneView.scene = scene
+        
+        // Adding Sphere
+        let position = SCNVector3(0, 0, -3)
+        let sphereNode = createSphere(at: position)
+        scene.rootNode.addChildNode(sphereNode)
+    }
+    
+    private func createSphere(at position: SCNVector3) -> SCNNode{
+        let sphere = SCNSphere(radius: 0.4)
+        let node = SCNNode(geometry: sphere)
+        node.position = position
+        
+        return node
     }
     
     override func viewWillAppear(_ animated: Bool) {
