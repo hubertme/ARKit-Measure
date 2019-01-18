@@ -30,9 +30,21 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.scene = scene
         
         // Adding Sphere
-        let position = SCNVector3(0, 0, -3)
-        let sphereNode = createSphere(at: position)
-        scene.rootNode.addChildNode(sphereNode)
+//        let position = SCNVector3(0, 0, -3)
+//        let sphereNode = createSphere(at: position)
+//        scene.rootNode.addChildNode(sphereNode)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleUserTap))
+        tapGesture.numberOfTapsRequired = 1
+        sceneView.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc private func handleUserTap(_ sender: UITapGestureRecognizer){
+        let location = sender.location(in: sceneView)
+        let hitTest = sceneView.hitTest(location, types: [.featurePoint])
+        guard let result = hitTest.last else {return}
+        
+        print(result)
     }
     
     private func createSphere(at position: SCNVector3) -> SCNNode{
