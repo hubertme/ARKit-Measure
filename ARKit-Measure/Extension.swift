@@ -16,9 +16,8 @@ extension SCNNode {
         let dy = destination.position.y - position.y
         let dz = destination.position.z - position.z
         
-        let inches: Float = 39.3701
         let meters = sqrt(dx*dx + dy*dy + dz*dz)
         
-        return CGFloat(meters * inches)
+        return CGFloat(meters * 100)
     }
 }
