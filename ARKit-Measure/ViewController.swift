@@ -40,6 +40,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let node = SCNNode(geometry: sphere)
         node.position = position
         
+        let material = SCNMaterial()
+        material.diffuse.contents = #imageLiteral(resourceName: "mars_texture.png")
+        sphere.firstMaterial = material
+        
         return node
     }
     
