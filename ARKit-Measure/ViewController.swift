@@ -12,6 +12,7 @@ import ARKit
 
 class ViewController: UIViewController, ARSCNViewDelegate {
     
+    var spheres: [SCNNode] = []
     @IBOutlet var sceneView: ARSCNView!
     
     override func viewDidLoad() {
@@ -47,11 +48,25 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let transform = SCNMatrix4.init(result.worldTransform)
         let vector = SCNVector3Make(transform.m41, transform.m42, transform.m43)
         let sphere = createSphere(at: vector)
-        sceneView.scene.rootNode.addChildNode(sphere)
+        spheres.append(sphere)
+        
+        if let first = spheres.first {
+            print(sphere.distance(to: first))
+            if spheres.count > 2 {
+                for sphere in spheres {
+                    sphere.removeFromParentNode()
+                }
+                spheres = [spheres[2]]
+            }
+        }
+        
+        for sphere in spheres {
+            self.sceneView.scene.rootNode.addChildNode(sphere)
+        }
     }
     
     private func createSphere(at position: SCNVector3) -> SCNNode{
-        let sphere = SCNSphere(radius: 0.4)
+        let sphere = SCNSphere(radius: 0.005)
         let node = SCNNode(geometry: sphere)
         node.position = position
         
